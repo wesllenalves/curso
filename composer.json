@@ -1,0 +1,21 @@
+{
+    "name": "son/br-payment-gateways",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^6.2",
+        "squizlabs/php_codesniffer": "^3.0",
+        "phpunit/phpunit": "^6.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "wesllen",
+            "email": "wesllenalves@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "BrPayments\\": "src"
+        }
+    }
+}
