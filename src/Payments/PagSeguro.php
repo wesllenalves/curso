@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace BrPayments\Payments;
 
 class PagSeguro
@@ -11,7 +11,6 @@ class PagSeguro
     public function __construct(array $config)
     {
         $this->config = $config;
-
     }
 
     public function customer(...$customer)
@@ -22,7 +21,6 @@ class PagSeguro
             'senderPhone' => $customer[2],
             'senderEmail' => $customer[3],
         ];
-
     }
 
     public function shipping(...$shipping)
@@ -38,7 +36,6 @@ class PagSeguro
             'shippingAddressState' => $shipping[7],
             'shippingAddressCountry' => $shipping[8],
         ];
-
     }
 
     public function addProduct(...$product)
@@ -52,30 +49,37 @@ class PagSeguro
         ];
         if (!empty($product[4])) {
             $this->products[$index]['wheight'] = $product[4];
-
-		}
-	}
-
-	public function __toString()
-		{
-		    return http_build_query($this->toArray());
-		}
-
-    public function toArray()
-{
-    $items = [];
-    foreach ($this->products as $k => $product) {
-        $counter = $k+1;
-        $items['itemId'.$counter] = $product['id'];
-        $items['itemDescription'.$counter] = $product['description'];
-        $items['itemAmount'.$counter] = number_format($product['amount'], 2, '.', '');
-        $items['itemQuantity'.$counter] = $product['quantity'];
-        if (!empty($product['weight'])) {
-            $items['itemWeight'.$counter] = $product['weight'];
         }
     }
 
-    return array_merge($this->config, $items, $this->sender, $this->shipping);
+    public function removeProduct($id)
+    {
+        $products = array_filter($this->products, function ($product) use ($id) {
+            return $product['id'] !=$id;
+        });
 
-   }
+        $this->products = array_values($products);
+    }
+
+    public function __toString()
+    {
+            return http_build_query($this->toArray());
+    }
+
+    public function toArray()
+    {
+        $items = [];
+        foreach ($this->products as $k => $product) {
+            $counter = $k+1;
+            $items['itemId'.$counter] = $product['id'];
+            $items['itemDescription'.$counter] = $product['description'];
+            $items['itemAmount'.$counter] = number_format($product['amount'], 2, '.', '');
+            $items['itemQuantity'.$counter] = $product['quantity'];
+            if (!empty($product['weight'])) {
+                $items['itemWeight'.$counter] = $product['weight'];
+            }
+        }
+
+        return array_merge($this->config, $items, $this->sender, $this->shipping);
+    }
 }

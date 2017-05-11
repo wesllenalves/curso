@@ -1,5 +1,6 @@
 <?php
 namespace BrPayments\Payments;
+
 class PagSeguroTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
@@ -29,10 +30,11 @@ class PagSeguroTest extends \PHPUnit\Framework\TestCase
         $this->pag_seguro->addProduct(1, 'Curso de PHP', 19.99, 20);
         $this->pag_seguro->addProduct(2, 'Livro de Laravel', 15, 31, 1.5);
     }
+    
     public function testListarProdutosAdicionadosEmUmArray()
-{
-    $actual = $this->pag_seguro->toArray();
-    $expected = [
+    {
+        $actual = $this->pag_seguro->toArray();
+        $expected = [
         'email'=>'email@email',
         'token'=>'token',
         'currency'=>'BRL',
@@ -58,14 +60,43 @@ class PagSeguroTest extends \PHPUnit\Framework\TestCase
         'shippingAddressCity'=>'Cidade Exemplo',
         'shippingAddressState'=>'SP',
         'shippingAddressCountry'=>'ATA',
-    ];
-    $this->assertEquals($expected, $actual);
-  }
+        ];
+        $this->assertEquals($expected, $actual);
+    }
 
-  public function testListarProdutosAdicionadosEmUmaString()
+    public function testRemoverProduto()
+    {
+        $this->pag_seguro->removeProduct(2);
+        $actual = $this->pag_seguro->toArray();
+        $expected = [
+        'email'=>'email@email',
+        'token'=>'token',
+        'currency'=>'BRL',
+        'reference'=>'REF1234',
+        'itemId1'=>1,
+        'itemDescription1'=>'Curso de PHP',
+        'itemAmount1'=>'19.99',
+        'itemQuantity1'=>20,
+        'senderName'=>'Jose Comprador',
+        'senderAreaCode'=>11,
+        'senderPhone'=>99999999,
+        'senderEmail'=>'comprador@comprador.com.br',
+        'shippingType'=>1,
+        'shippingAddressStreet'=>'Av. PagSeguro',
+        'shippingAddressNumber'=>99,
+        'shippingAddressComplement'=>'99o andar',
+        'shippingAddressDistrict'=>'Jardim Internet',
+        'shippingAddressPostalCode'=>99999999,
+        'shippingAddressCity'=>'Cidade Exemplo',
+        'shippingAddressState'=>'SP',
+        'shippingAddressCountry'=>'ATA',
+        ];
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testListarProdutosAdicionadosEmUmaString()
     {
         $actual = (string)$this->pag_seguro;
         $this->assertTrue(is_string($actual));
     }
 }
-?>
