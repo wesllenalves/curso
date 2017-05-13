@@ -1,7 +1,9 @@
 <?php
 namespace BrPayments\Payments;
 
-class PagSeguro
+use BrPayments\OrderInterface;
+
+class PagSeguro implements OrderInterface
 {
     protected $config;
     protected $sender;
@@ -61,7 +63,7 @@ class PagSeguro
         $this->products = array_values($products);
     }
 
-    public function __toString()
+    public function __toString() :string
     {
             return http_build_query($this->toArray());
     }

@@ -40,7 +40,7 @@ class MakeRequestTest extends TestCase
         //requisição
         $pag_seguro_request = new Requests\PagSeguro();
 
-        $response = (new MakeRequest())->post($pag_seguro, true);
+        $response = (new MakeRequest($pag_seguro_request))->post($pag_seguro, true);
 
         $xml = new \SimpleXMLElement((string)$response);
         $url = $pag_seguro_request->getUrlFinal($xml->code, true);
