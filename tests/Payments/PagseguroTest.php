@@ -1,7 +1,8 @@
 <?php
 namespace BrPayments\Payments;
 
-class PagSeguroTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+class PagSeguroTest extends TestCase
 {
     public function setUp()
     {
@@ -30,7 +31,7 @@ class PagSeguroTest extends \PHPUnit\Framework\TestCase
         $this->pag_seguro->addProduct(1, 'Curso de PHP', 19.99, 20);
         $this->pag_seguro->addProduct(2, 'Livro de Laravel', 15, 31, 1.5);
     }
-    
+
     public function testListarProdutosAdicionadosEmUmArray()
     {
         $actual = $this->pag_seguro->toArray();

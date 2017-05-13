@@ -2,7 +2,9 @@
 
 namespace BrPayments;
 
-class MakeRequestTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class MakeRequestTest extends TestCase
 {
     public function testPagSeguroRequest()
     {
